@@ -1,0 +1,94 @@
+
+# Represents a type or class of devices
+type DeviceType implements Model & TokenReference & NamedEntity & BrandedEntity {
+    id: ID!
+    created_at: String
+    updated_at: String
+    deleted_at: String
+    token: String!
+    name: String
+    description: String
+    imageUrl: String
+    icon: String
+    backgroundColor: String
+    foregroundColor: String
+    borderColor: String
+}
+
+# Data required to create a device type.
+input DeviceTypeCreateRequest {
+    token: String!
+    name: String
+    description: String
+    imageUrl: String
+    icon: String
+    backgroundColor: String
+    foregroundColor: String
+    borderColor: String
+}
+
+# Criteria used when searching for device types.
+input DeviceTypeSearchCriteria {
+    pageNumber: Int!
+    pageSize: Int!
+}
+
+# Represents a device instance
+type Device implements Model & TokenReference & NamedEntity {
+    id: ID!
+    created_at: String
+    updated_at: String
+    deleted_at: String
+    token: String!
+    name: String
+    description: String
+    deviceType: DeviceType!
+}
+
+# Data required to create a device.
+input DeviceCreateRequest {
+    token: String!
+    name: String
+    description: String
+    deviceTypeToken: String!
+}
+
+# Criteria used when searching for devices.
+input DeviceSearchCriteria {
+    pageNumber: Int!
+    pageSize: Int!
+    deviceTypeToken: String
+}
+
+# Contains queries executed against model.
+type Query {
+    # Find a device type by unique id.
+    deviceType(id: ID!): DeviceType!
+    # Find a device type by unique token.
+    deviceTypeByToken(token: String!): DeviceType!
+    # List devices that meet criteria.
+    deviceTypes(criteria: DeviceTypeSearchCriteria!): [DeviceType!]!
+    # Find a device by unique id.
+    device(id: ID!): Device!
+    # Find a device by unique token.
+    deviceByToken(token: String!): Device!
+    # List devices that meet criteria.
+    devices(criteria: DeviceSearchCriteria!): [Device!]!
+}
+
+# Contains mutations executed against model.
+type Mutation {
+    # Create a new device type.
+    createDeviceType(value: DeviceTypeCreateRequest): DeviceType!
+    # Update an existing device type.
+    updateDeviceType(id: ID!, value: DeviceTypeCreateRequest): DeviceType!
+    # Create a new device.
+    createDevice(value: DeviceCreateRequest): Device!
+    # Update an existing device.
+    updateDevice(id: ID!, value: DeviceCreateRequest): Device!
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+}
