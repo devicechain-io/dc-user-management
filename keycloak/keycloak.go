@@ -54,7 +54,7 @@ func (kmgr *KeycloakManager) ExecuteInitialize(ctx context.Context) error {
 		return err
 	}
 	kmgr.JWT = jwt
-	log.Info().Msg(fmt.Sprintf("Logged in and got JWT '%+v'", kmgr.JWT))
+	log.Info().Msg("Logged in to Keycloak master realm successfully.")
 
 	return nil
 }
