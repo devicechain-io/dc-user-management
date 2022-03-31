@@ -56,10 +56,13 @@ func afterMicroserviceInitialized(ctx context.Context) error {
 		return err
 	}
 
+	// Map of providers that will be injected into graphql http context.
+	providers := map[gqlcore.ContextKey]interface{}{}
+
 	// Create and initialize graphql manager.
 	schema := gqlcore.CommonTypes + graphql.SchemaContent
 	parsed := gql.MustParseSchema(schema, &graphql.SchemaResolver{})
-	GraphQLManager = gqlcore.NewGraphQLManager(Microservice, core.NewNoOpLifecycleCallbacks(), *parsed, nil)
+	GraphQLManager = gqlcore.NewGraphQLManager(Microservice, core.NewNoOpLifecycleCallbacks(), *parsed, providers)
 	err = GraphQLManager.Initialize(ctx)
 	if err != nil {
 		return err

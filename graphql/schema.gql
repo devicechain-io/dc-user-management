@@ -1,3 +1,16 @@
+# Represents a user assigned to a tenant.
+type TenantUser implements Model {
+    id: ID!
+    created_at: String
+    updated_at: String
+    deleted_at: String
+    firstName: String!
+    lastName: String!
+    email: String
+    username: String!
+    enabled: Boolean
+}
+
 # Contains queries executed against model.
 type Query {
 }
